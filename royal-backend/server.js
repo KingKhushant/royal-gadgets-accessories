@@ -54,6 +54,10 @@ app.use('/api/categories', categoryRoutes);
 app.use('/api/banners', bannerRoutes);
 app.use('/api/reviews', reviewRoutes);
 
+console.log("TWILIO SID:", process.env.TWILIO_ACCOUNT_SID);
+console.log("TWILIO NUMBER:", process.env.TWILIO_WHATSAPP_NUMBER);
+console.log("ADMIN NUMBER:", process.env.ADMIN_WHATSAPP_NUMBER);
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

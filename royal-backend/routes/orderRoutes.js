@@ -2,6 +2,7 @@
 const express = require("express");
 const router = express.Router();
 const Order = require("../models/Order");
+const sendOrderWhatsapp = require("../utils/sendWhatsapp");
 
 // GET ALL ORDERS
 router.get("/orders", async (req, res) => {
@@ -65,6 +66,13 @@ router.post("/orders", async (req, res) => {
     });
 
     await newOrder.save();
+    const populatedOrder = await Order.findById(newOrder._id)
+      .populate("items.product", "name");
+
+    await sendOrderWhatsapp(populatedOrder);
+
+    // Send WhatsApp to Admin
+    await sendOrderWhatsapp(newOrder);
 
     res.status(201).json({
       success: true,
