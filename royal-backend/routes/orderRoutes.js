@@ -66,13 +66,14 @@ router.post("/orders", async (req, res) => {
     });
 
     await newOrder.save();
+    
     const populatedOrder = await Order.findById(newOrder._id)
       .populate("items.product", "name");
 
     await sendOrderWhatsapp(populatedOrder);
 
     // Send WhatsApp to Admin
-    await sendOrderWhatsapp(newOrder);
+    // await sendOrderWhatsapp(newOrder);
 
     res.status(201).json({
       success: true,
